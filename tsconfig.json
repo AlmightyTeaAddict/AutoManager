@@ -1,0 +1,27 @@
+{
+        "include": ["./**/*.ts"],
+        "exclude": ["./**/*.test.ts", "./build/**/*"],
+        "compilerOptions": {
+                "module": "es2015",
+                "moduleResolution": "node",
+                "outDir": "build",
+                "target": "es2015",
+                "allowImportingTsExtensions": true,
+                "allowUnreachableCode": false,
+                "allowUnusedLabels": false,
+                "exactOptionalPropertyTypes": true,
+                "noFallthroughCasesInSwitch": true,
+                "noImplicitOverride": true,
+                "noImplicitReturns": true,
+                "noPropertyAccessFromIndexSignature": true,
+                "noUncheckedIndexedAccess": true,
+                "noUncheckedSideEffectImports": true,
+                "strict": true,
+                "rewriteRelativeImportExtensions": true,
+                "declaration": true,
+                "declarationMap": true,
+                "sourceMap": true,
+                "verbatimModuleSyntax": true,
+                "moduleDetection": "force"
+        }
+}
