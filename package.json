@@ -1,15 +1,4 @@
 {
-        "name": "auto-manager-simple",
-        "type": "module",
-        "main": "build/main.js",
-        "scripts": {
-                "build": "tsc",
-                "start": "node ./build/main.js",
-                "format": "prettier . --write"
-        },
-        "devDependencies": {
-                "@types/node": "^24.7.2",
-                "prettier": "^3.6.2",
-                "typescript": "^5.9.3"
-        }
+        "name": "auto-manager",
+	"workspaces": ["server"]
 }
