@@ -1,8 +1,7 @@
-import type { State } from "../schedule.ts";
-import { addLog } from "../logs.ts";
+import * as scheduler from "auto-manager-scheduler";
 
-export function scheduleScript(state: State) {
-        addLog(state.logs, {
+export function scheduleScript(state: scheduler.State) {
+        scheduler.addLog(state.logs, {
                 type: "info",
                 message: "Scheduled more things!!",
                 tick: state.tick,

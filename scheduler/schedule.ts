@@ -1,4 +1,3 @@
-import { pickScript } from "./scripts.ts";
 import type { Logs } from "./logs.ts";
 
 export type State = {
@@ -23,7 +22,6 @@ export function tick(state: State): string[] {
                 }
                 item.done = true;
                 scriptsToRun.push(item.scriptName);
-                pickScript(item.scriptName, state);
         }
         state.schedule.filter((x) => x.done === false);
         state.tick++;
