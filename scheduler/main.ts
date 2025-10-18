@@ -1,1 +1,3 @@
-export { startLoop } from "./schedule.ts";
+export { tick } from "./schedule.ts";
+export { type Env } from "./scripts.ts";
+
