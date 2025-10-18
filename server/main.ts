@@ -1,3 +1,1 @@
-import { loop } from "./schedule.ts";
-
-loop();
+export {startLoop } from "./schedule.ts";

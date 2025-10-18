@@ -1,6 +1,6 @@
 {
         "name": "auto-manager-server",
-        "main": "build/main.ts",
+        "main": "build/main.js",
         "type": "module",
         "scripts": {
                 "build": "tsc",

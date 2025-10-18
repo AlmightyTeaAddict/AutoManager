@@ -10,22 +10,18 @@ export type ScheduleItem = {
 
 export type Schedule = ScheduleItem[];
 
-export function loop() {
-        let schedule: Schedule = [
-                { scriptName: "schedule", tick: 0, done: false },
-        ];
-        let logs: Logs = [];
-        let tick = 0;
+export function startLoop() {
+	const env: Env = { tick: 0, schedule: [], logs: [] };
         setInterval(() => {
-                const env: Env = { tick, schedule, logs };
-                for (const item of schedule) {
-                        if (item.tick !== tick) {
+                for (const item of env.schedule) {
+                        if (item.tick !== env.tick) {
                                 continue;
                         }
                         item.done = true;
                         pickScript(item.scriptName, env);
                 }
-                schedule.filter((x) => x.done === false);
-                tick++;
+                env.schedule.filter(x => x.done === false);
+		env.tick++;
         }, 1000);
+	return env;
 }
