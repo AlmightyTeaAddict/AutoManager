@@ -4,9 +4,7 @@ import { sayHiScript } from "./scripts/sayHi.ts";
 import type { Logs } from "./logs.ts";
 import { addLog } from "./logs.ts";
 
-export type ScriptName = "say-hi" | "schedule" | "unnamed";
-
-export function pickScript(scriptName: ScriptName, state: State) {
+export function pickScript(scriptName: string, state: State) {
         if (scriptName === "schedule") {
                 scheduleScript(state);
                 return;
