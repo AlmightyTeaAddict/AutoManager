@@ -1,4 +1,7 @@
-export type Logs = Log[];
+export type State = {
+        logs: Log[];
+};
+
 export type Log = {
         type: "error" | "info";
         message: string;
@@ -10,7 +13,7 @@ export function formatLog(log: Log): string {
         return `${log.type}: ${log.source}: ${log.message}`;
 }
 
-export function addLog(logs: Logs, log: Log) {
-        logs.push(log);
+export function addLog(state: State, log: Log) {
+        state.logs.push(log);
         console.log(formatLog(log));
 }

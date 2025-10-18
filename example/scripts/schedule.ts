@@ -1,40 +1,44 @@
+import { logger } from "auto-manager-core";
 import * as scheduler from "auto-manager-scheduler";
 
-export function scheduleScript(state: scheduler.State) {
-        scheduler.addLog(state.logs, {
+export function scheduleScript(
+        schedulerState: scheduler.State,
+        loggerState: logger.State,
+) {
+        logger.addLog(loggerState, {
                 type: "info",
                 message: "Scheduled more things!!",
-                tick: state.tick,
+                tick: schedulerState.tick,
                 source: "schedule script",
         });
-        state.schedule.push({
+        schedulerState.schedule.push({
                 scriptName: "say-hi",
-                tick: state.tick + 1,
+                tick: schedulerState.tick + 1,
                 done: false,
         });
-        state.schedule.push({
+        schedulerState.schedule.push({
                 scriptName: "say-hi",
-                tick: state.tick + 2,
+                tick: schedulerState.tick + 2,
                 done: false,
         });
-        state.schedule.push({
+        schedulerState.schedule.push({
                 scriptName: "say-hi",
-                tick: state.tick + 3,
+                tick: schedulerState.tick + 3,
                 done: false,
         });
-        state.schedule.push({
+        schedulerState.schedule.push({
                 scriptName: "say-hi",
-                tick: state.tick + 4,
+                tick: schedulerState.tick + 4,
                 done: false,
         });
-        state.schedule.push({
+        schedulerState.schedule.push({
                 scriptName: "unnamed",
-                tick: state.tick + 5,
+                tick: schedulerState.tick + 5,
                 done: false,
         });
-        state.schedule.push({
+        schedulerState.schedule.push({
                 scriptName: "schedule",
-                tick: state.tick + 5,
+                tick: schedulerState.tick + 5,
                 done: false,
         });
 }

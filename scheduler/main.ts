@@ -1,10 +1,6 @@
-import type { Logs } from "./logs.ts";
-export { addLog } from "./logs.ts";
-
 export type State = {
         schedule: Schedule;
         tick: number;
-        logs: Logs;
 };
 
 export type ScheduleItem = {
