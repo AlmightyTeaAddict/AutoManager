@@ -1,3 +1,1 @@
-export { tick } from "./schedule.ts";
-export { type Env } from "./scripts.ts";
-
+export { tick, type State } from "./schedule.ts";

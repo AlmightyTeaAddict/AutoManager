@@ -1,41 +1,41 @@
-import type { Env } from "../scripts.ts";
+import type { State } from "../schedule.ts";
 import { addLog } from "../logs.ts";
 
-export function scheduleScript(env: Env) {
-        addLog(env.logs, {
+export function scheduleScript(state: State) {
+        addLog(state.logs, {
                 type: "info",
                 message: "Scheduled more things!!",
-                tick: env.tick,
+                tick: state.tick,
                 source: "schedule script",
         });
-        env.schedule.push({
+        state.schedule.push({
                 scriptName: "say-hi",
-                tick: env.tick + 1,
+                tick: state.tick + 1,
                 done: false,
         });
-        env.schedule.push({
+        state.schedule.push({
                 scriptName: "say-hi",
-                tick: env.tick + 2,
+                tick: state.tick + 2,
                 done: false,
         });
-        env.schedule.push({
+        state.schedule.push({
                 scriptName: "say-hi",
-                tick: env.tick + 3,
+                tick: state.tick + 3,
                 done: false,
         });
-        env.schedule.push({
+        state.schedule.push({
                 scriptName: "say-hi",
-                tick: env.tick + 4,
+                tick: state.tick + 4,
                 done: false,
         });
-        env.schedule.push({
+        state.schedule.push({
                 scriptName: "unnamed",
-                tick: env.tick + 5,
+                tick: state.tick + 5,
                 done: false,
         });
-        env.schedule.push({
+        state.schedule.push({
                 scriptName: "schedule",
-                tick: env.tick + 5,
+                tick: state.tick + 5,
                 done: false,
         });
 }

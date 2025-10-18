@@ -1,4 +1,4 @@
-import type { Schedule } from "./schedule.ts";
+import type { Schedule, State } from "./schedule.ts";
 import { scheduleScript } from "./scripts/schedule.ts";
 import { sayHiScript } from "./scripts/sayHi.ts";
 import type { Logs } from "./logs.ts";
@@ -6,25 +6,19 @@ import { addLog } from "./logs.ts";
 
 export type ScriptName = "say-hi" | "schedule" | "unnamed";
 
-export type Env = {
-        schedule: Schedule;
-        tick: number;
-        logs: Logs;
-};
-
-export function pickScript(scriptName: ScriptName, env: Env) {
+export function pickScript(scriptName: ScriptName, state: State) {
         if (scriptName === "schedule") {
-                scheduleScript(env);
+                scheduleScript(state);
                 return;
         }
         if (scriptName === "say-hi") {
-                sayHiScript(env);
+                sayHiScript(state);
                 return;
         }
-        addLog(env.logs, {
+        addLog(state.logs, {
                 type: "error",
                 message: `The scheduled script "${scriptName}" doesn't exist!`,
-                tick: env.tick,
+                tick: state.tick,
                 source: "pickScript",
         });
 }

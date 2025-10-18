@@ -1,6 +1,12 @@
 import { pickScript } from "./scripts.ts";
-import type { ScriptName, Env } from "./scripts.ts";
+import type { ScriptName } from "./scripts.ts";
 import type { Logs } from "./logs.ts";
+
+export type State = {
+        schedule: Schedule;
+        tick: number;
+        logs: Logs;
+};
 
 export type ScheduleItem = {
         scriptName: ScriptName;
@@ -10,15 +16,14 @@ export type ScheduleItem = {
 
 export type Schedule = ScheduleItem[];
 
-export function tick(env: Env) {
-	for (const item of env.schedule) {
-		if (item.tick !== env.tick) {
-			continue;
-		}
-		item.done = true;
-		pickScript(item.scriptName, env);
-	}
-	env.schedule.filter(x => x.done === false);
-	env.tick++;
+export function tick(state: State) {
+        for (const item of state.schedule) {
+                if (item.tick !== state.tick) {
+                        continue;
+                }
+                item.done = true;
+                pickScript(item.scriptName, state);
+        }
+        state.schedule.filter((x) => x.done === false);
+        state.tick++;
 }
-

@@ -1,11 +1,11 @@
-import type { Env } from "../scripts.ts";
+import type { State } from "../schedule.ts";
 import { addLog } from "../logs.ts";
 
-export function sayHiScript(env: Env) {
-        addLog(env.logs, {
+export function sayHiScript(state: State) {
+        addLog(state.logs, {
                 type: "info",
                 message: "Haiiiiiiii :33",
-                tick: env.tick,
+                tick: state.tick,
                 source: "say-hi script",
         });
 }
