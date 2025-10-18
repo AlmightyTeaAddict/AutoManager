@@ -1,4 +1,4 @@
 {
         "name": "auto-manager",
-	"workspaces": ["scheduler", "example"]
+	"workspaces": ["core", "scheduler", "example"]
 }
