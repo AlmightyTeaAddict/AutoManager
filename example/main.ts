@@ -1,4 +1,4 @@
-import { startLoop } from "auto-manager-server";
+import { startLoop } from "auto-manager-scheduler";
 
 const env = startLoop();
 
