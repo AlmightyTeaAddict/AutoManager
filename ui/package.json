@@ -12,8 +12,6 @@
                 "typescript": "^5.9.3"
         },
         "dependencies": {
-                "auto-manager-core": "file:../core",
-                "auto-manager-ui": "file:",
-                "example": "*"
+                "auto-manager-core": "file:../core"
         }
 }
