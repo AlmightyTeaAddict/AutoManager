@@ -1,11 +1,10 @@
 {
-        "name": "example",
+        "name": "auto-manager-ui",
         "main": "build/main.js",
         "type": "module",
         "scripts": {
                 "build": "tsc",
-                "format": "prettier . --config ../.prettierrc --ignore-path ../.gitignore --write",
-                "start": "node ./build/main.js"
+                "format": "prettier . --config ../.prettierrc --ignore-path ../.gitignore --write"
         },
         "devDependencies": {
                 "@types/node": "^24.7.2",
@@ -14,8 +13,7 @@
         },
         "dependencies": {
                 "auto-manager-core": "file:../core",
-                "auto-manager-scheduler": "file:../scheduler",
-                "auto-manager-ui": "file:../ui",
+                "auto-manager-ui": "file:",
                 "example": "*"
         }
 }
