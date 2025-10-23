@@ -15,7 +15,7 @@ schedulerState.schedule.push({
         done: false,
 });
 
-setInterval(() => {
+function tick() {
         const scriptsToRun = scheduler.tick(schedulerState);
         for (const scriptName of scriptsToRun) {
                 if (scriptName === "say-hi") {
@@ -39,4 +39,6 @@ setInterval(() => {
                         error: { module: "user", userError },
                 });
         }
-}, 1000);
+}
+
+setInterval(tick, 1000);
