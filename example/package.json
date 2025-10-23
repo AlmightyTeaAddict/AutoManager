@@ -15,6 +15,7 @@
         "dependencies": {
                 "auto-manager-core": "file:../core",
                 "auto-manager-scheduler": "file:../scheduler",
-                "auto-manager-ui": "file:../ui"
+                "auto-manager-ui": "file:../ui",
+                "auto-manager-server": "file:../server"
         }
 }
