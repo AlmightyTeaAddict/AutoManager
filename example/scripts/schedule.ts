@@ -5,12 +5,12 @@ export function scheduleScript(
         schedulerState: scheduler.State,
         loggerState: logger.State,
 ) {
-        logger.addLog(loggerState, {
+        const info: logger.Log = {
                 type: "info",
                 message: "Scheduled more things!!",
-                tick: schedulerState.tick,
                 source: "schedule script",
-        });
+        };
+        logger.addLog(loggerState, info);
         schedulerState.schedule.push({
                 scriptName: "say-hi",
                 tick: schedulerState.tick + 1,

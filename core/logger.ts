@@ -1,16 +1,21 @@
+import * as errors from "./errors.ts";
+
 export type State = {
         logs: Log[];
 };
 
-export type Log = {
-        type: "error" | "info";
-        message: string;
-        tick: number;
-        source: string;
-};
+export type Log =
+        | { type: "error"; error: errors.GeneralError }
+        | { type: "info"; message: string; source: string };
 
 export function formatLog(log: Log): string {
-        return `${log.type}: ${log.source}: ${log.message}`;
+        if (log.type === "error") {
+                return `error: ${errors.generalErrorToMessage(log.error)}`;
+        }
+        if (log.type === "info") {
+                return `info: ${log.source}: ${log.message}`;
+        }
+        throw new Error("Invalid log type");
 }
 
 export function addLog(state: State, log: Log) {

@@ -5,10 +5,10 @@ export function sayHiScript(
         schedulerState: scheduler.State,
         loggerState: logger.State,
 ) {
-        logger.addLog(loggerState, {
+        const info: logger.Log = {
                 type: "info",
                 message: "Haiiiiiiii :33",
-                tick: schedulerState.tick,
                 source: "say-hi script",
-        });
+        };
+        logger.addLog(loggerState, info);
 }

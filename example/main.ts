@@ -1,4 +1,4 @@
-import { logger } from "auto-manager-core";
+import { logger, errors } from "auto-manager-core";
 import * as scheduler from "auto-manager-scheduler";
 import * as ui from "auto-manager-ui";
 import { sayHiScript } from "./scripts/sayHi.ts";
@@ -30,11 +30,13 @@ setInterval(() => {
                         askNameScript(uiState);
                         continue;
                 }
+                const userError: errors.UserError = {
+                        code: "scheduled_script_does_not_exist",
+                        name: scriptName,
+                };
                 logger.addLog(loggerState, {
                         type: "error",
-                        message: `The scheduled script "${scriptName}" doesn't exist!`,
-                        tick: schedulerState.tick,
-                        source: "tick",
+                        error: { module: "user", userError },
                 });
         }
 }, 1000);
