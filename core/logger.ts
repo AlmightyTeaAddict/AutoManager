@@ -1,4 +1,5 @@
 import * as errors from "./errors.ts";
+import * as utils from "./utils.ts";
 
 export type State = {
         logs: Log[];
@@ -15,7 +16,7 @@ export function formatLog(log: Log): string {
         if (log.type === "info") {
                 return `info: ${log.source}: ${log.message}`;
         }
-        throw new Error("Invalid log type");
+        return utils.never();
 }
 
 export function addLog(state: State, log: Log) {
