@@ -1,8 +1,7 @@
 export type State = {
-	promptQueue: string[];
+        promptQueue: string[];
 };
 
 export function addPrompt(state: State, prompt: string) {
-	state.promptQueue.push(prompt);
+        state.promptQueue.push(prompt);
 }
-

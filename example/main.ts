@@ -1,10 +1,13 @@
 import { logger } from "auto-manager-core";
 import * as scheduler from "auto-manager-scheduler";
+import * as ui from "auto-manager-ui";
 import { sayHiScript } from "./scripts/sayHi.ts";
 import { scheduleScript } from "./scripts/schedule.ts";
+import { askNameScript } from "./scripts/askName.ts";
 
 const schedulerState: scheduler.State = { tick: 0, schedule: [] };
 const loggerState: logger.State = { logs: [] };
+const uiState: ui.State = { promptQueue: [] };
 
 schedulerState.schedule.push({
         scriptName: "schedule",
@@ -21,6 +24,10 @@ setInterval(() => {
                 }
                 if (scriptName === "schedule") {
                         scheduleScript(schedulerState, loggerState);
+                        continue;
+                }
+                if (scriptName === "ask-name") {
+                        askNameScript(uiState);
                         continue;
                 }
                 logger.addLog(loggerState, {

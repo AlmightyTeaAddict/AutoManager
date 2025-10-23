@@ -27,7 +27,7 @@ export function scheduleScript(
                 done: false,
         });
         schedulerState.schedule.push({
-                scriptName: "say-hi",
+                scriptName: "ask-name",
                 tick: schedulerState.tick + 4,
                 done: false,
         });
