@@ -7,7 +7,7 @@ import { askNameScript } from "./scripts/askName.ts";
 
 const schedulerState: scheduler.State = { tick: 0, schedule: [] };
 const loggerState: logger.State = { logs: [] };
-const uiState: ui.State = { promptQueue: [] };
+const uiState: ui.State = { promptQueue: [], nextPromptQueueItemId: 0 };
 
 schedulerState.schedule.push({
         scriptName: "schedule",
