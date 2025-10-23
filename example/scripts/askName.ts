@@ -1,6 +1,6 @@
 import * as ui from "auto-manager-ui";
 
-export function askNameScript(uiState: ui.State) {
+export async function askNameScript(uiState: ui.State): Promise<void> {
         const prompt = "ask-name";
-        ui.addPrompt(uiState, prompt);
+        const name = await ui.addPrompt(uiState, prompt);
 }

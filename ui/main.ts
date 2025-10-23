@@ -1,7 +1,14 @@
 export type State = {
-        promptQueue: string[];
+        promptQueue: Array<PromptQueueItem>;
 };
 
-export function addPrompt(state: State, prompt: string) {
-        state.promptQueue.push(prompt);
+type PromptQueueItem = {
+        name: string;
+        resolve: (data: string) => void;
+};
+
+export function addPrompt(state: State, name: string): Promise<string> {
+        return new Promise((resolve) => {
+                state.promptQueue.push({ name, resolve });
+        });
 }
