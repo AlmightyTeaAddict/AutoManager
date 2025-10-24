@@ -12,3 +12,20 @@ export function fromTryCatch<A, E>(
                 return { isOk: false, error: mappedError };
         }
 }
+
+export function map<A, B, E>(r: Result<A, E>, f: (a: A) => B): Result<B, E> {
+        if (!r.isOk) {
+                return r;
+        }
+        return { isOk: true, data: f(r.data) };
+}
+
+export function bind<A, B, E>(
+        r: Result<A, E>,
+        f: (a: A) => Result<B, E>,
+): Result<B, E> {
+        if (!r.isOk) {
+                return r;
+        }
+        return f(r.data);
+}

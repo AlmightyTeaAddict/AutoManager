@@ -109,3 +109,29 @@ async function getBody(
                 });
         });
 }
+
+export function matchPathSegmentAndMethod(
+        method: Method,
+        pathSegment: string,
+        pathSegmentI: number,
+        req: Req,
+): boolean {
+        if (req.method !== method) {
+                return false;
+        }
+        if (req.path[pathSegmentI] !== pathSegment) {
+                return false;
+        }
+        return true;
+}
+
+export function extractPathSegment(
+        i: number,
+        req: Req,
+): result.Result<string, {}> {
+        const segment = req.path[i];
+        if (segment === undefined) {
+                return { isOk: false, error: {} };
+        }
+        return { isOk: true, data: segment };
+}

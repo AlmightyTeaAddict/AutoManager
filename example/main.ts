@@ -1,4 +1,4 @@
-import { logger, errors } from "auto-manager-core";
+import { logger, errors, result, utils } from "auto-manager-core";
 import * as scheduler from "auto-manager-scheduler";
 import * as ui from "auto-manager-ui";
 import * as server from "auto-manager-server";
@@ -43,27 +43,23 @@ function tick() {
 }
 
 async function responder(req: server.Req): Promise<server.Res> {
-        if (req.path[0] === "prompt" && req.method === "POST") {
-                const idString = req.path[1];
-                if (idString === undefined) {
+        if (server.matchPathSegmentAndMethod("POST", "prompt", 0, req)) {
+                const idStringResult = server.extractPathSegment(1, req);
+                const idResult = result.bind(idStringResult, utils.parseInt);
+                if (!idResult.isOk) {
                         return {
                                 body: "{}",
                                 status: 404,
                         };
                 }
-                const id = parseInt(idString);
-                if (isNaN(id)) {
-                        return {
-                                body: "{}",
-                                status: 404,
-                        };
-                }
+                const id = idResult.data;
                 await ui.handlePromptResponse(uiState, id, req.body);
                 return {
                         body: "{}",
                         status: 200,
                 };
         }
+
         return {
                 body: "{}",
                 status: 404,
