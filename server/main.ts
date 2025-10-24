@@ -15,8 +15,8 @@ export type Res = {
         status: number;
 };
 
-export async function start(responder: (req: Req) => Promise<Res>) {
-        nodeCreateServer(async (nodeReq, nodeRes) => {
+export function start(responder: (req: Req) => Promise<Res>) {
+        const server = nodeCreateServer(async (nodeReq, nodeRes) => {
                 const reqResult = await nodeReqToNiceReq(nodeReq);
                 if (!reqResult.isOk) {
                         // TODO: Better error
@@ -29,6 +29,7 @@ export async function start(responder: (req: Req) => Promise<Res>) {
                 nodeRes.statusCode = res.status;
                 nodeRes.end(res.body);
         });
+	server.listen(8080);
 }
 
 async function nodeReqToNiceReq(
