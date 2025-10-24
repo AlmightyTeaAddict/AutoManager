@@ -1,21 +1,17 @@
 {
-        "name": "example",
+        "name": "auto-manager-api",
         "main": "build/main.js",
         "type": "module",
         "scripts": {
                 "build": "tsc",
-                "format": "prettier . --config ../.prettierrc --ignore-path ../.gitignore --write",
-                "start": "node ./build/main.js"
+                "format": "prettier . --config ../.prettierrc --ignore-path ../.gitignore --write"
         },
         "devDependencies": {
-                "@types/node": "^24.7.2",
                 "prettier": "^3.6.2",
                 "typescript": "^5.9.3"
         },
         "dependencies": {
-                "auto-manager-api": "file:../api",
                 "auto-manager-core": "file:../core",
-                "auto-manager-scheduler": "file:../scheduler",
                 "auto-manager-server": "file:../server",
                 "auto-manager-ui": "file:../ui"
         }
