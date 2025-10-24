@@ -1,6 +1,7 @@
 import { logger, errors } from "auto-manager-core";
 import * as scheduler from "auto-manager-scheduler";
 import * as ui from "auto-manager-ui";
+import * as server from "auto-manager-server";
 import { sayHiScript } from "./scripts/sayHi.ts";
 import { scheduleScript } from "./scripts/schedule.ts";
 import { askNameScript } from "./scripts/askName.ts";
@@ -41,4 +42,12 @@ function tick() {
         }
 }
 
+async function responder(req: server.Req): Promise<server.Res> {
+        return {
+                body: "{}",
+                status: 200,
+        };
+}
+
 setInterval(tick, 1000);
+server.start(responder);
