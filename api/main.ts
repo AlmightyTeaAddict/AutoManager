@@ -43,6 +43,14 @@ async function promptResponder(
                 };
         }
 
+	if (req.method === "GET") {
+		const body = JSON.stringify(uiState.promptQueue.map(({ name, id }) => ({ name, id })));
+		return {
+			body,
+			status: 200,
+		};
+	}
+
         return {
                 body: "{}",
                 status: 404,
