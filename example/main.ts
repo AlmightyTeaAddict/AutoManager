@@ -2,6 +2,7 @@ import { logger, errors, result, utils } from "auto-manager-core";
 import * as scheduler from "auto-manager-scheduler";
 import * as ui from "auto-manager-ui";
 import * as server from "auto-manager-server";
+import * as api from "auto-manager-api";
 import { sayHiScript } from "./scripts/sayHi.ts";
 import { scheduleScript } from "./scripts/schedule.ts";
 import { askNameScript } from "./scripts/askName.ts";
@@ -43,21 +44,8 @@ function tick() {
 }
 
 async function responder(req: server.Req): Promise<server.Res> {
-        if (server.matchPathSegmentAndMethod("POST", "prompt", 0, req)) {
-                const idStringResult = server.extractPathSegment(1, req);
-                const idResult = result.bind(idStringResult, utils.parseInt);
-                if (!idResult.isOk) {
-                        return {
-                                body: "{}",
-                                status: 404,
-                        };
-                }
-                const id = idResult.data;
-                await ui.handlePromptResponse(uiState, id, req.body);
-                return {
-                        body: "{}",
-                        status: 200,
-                };
+        if (api.isUsingApi(req)) {
+                return await api.responder(req, { ui: uiState });
         }
 
         return {

@@ -125,6 +125,17 @@ export function matchPathSegmentAndMethod(
         return true;
 }
 
+export function matchPathSegment(
+        pathSegment: string,
+        pathSegmentI: number,
+        req: Req,
+): boolean {
+        if (req.path[pathSegmentI] !== pathSegment) {
+                return false;
+        }
+        return true;
+}
+
 export function extractPathSegment(
         i: number,
         req: Req,
