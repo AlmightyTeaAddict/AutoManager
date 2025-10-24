@@ -43,9 +43,30 @@ function tick() {
 }
 
 async function responder(req: server.Req): Promise<server.Res> {
+        if (req.path[0] === "prompt" && req.method === "POST") {
+                const idString = req.path[1];
+                if (idString === undefined) {
+                        return {
+                                body: "{}",
+                                status: 404,
+                        };
+                }
+                const id = parseInt(idString);
+                if (isNaN(id)) {
+                        return {
+                                body: "{}",
+                                status: 404,
+                        };
+                }
+                await ui.handlePromptResponse(uiState, id, req.body);
+                return {
+                        body: "{}",
+                        status: 200,
+                };
+        }
         return {
                 body: "{}",
-                status: 200,
+                status: 404,
         };
 }
 

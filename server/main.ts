@@ -29,7 +29,7 @@ export function start(responder: (req: Req) => Promise<Res>) {
                 nodeRes.statusCode = res.status;
                 nodeRes.end(res.body);
         });
-	server.listen(8080);
+        server.listen(8080);
 }
 
 async function nodeReqToNiceReq(
