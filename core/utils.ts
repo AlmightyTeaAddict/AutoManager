@@ -5,7 +5,7 @@ export function never(): never {
 }
 
 export function parseInt(s: string): result.Result<number, {}> {
-        const n = window.parseInt(s);
+        const n = globalThis.parseInt(s);
         if (isNaN(n)) {
                 return { isOk: false, error: {} };
         }
