@@ -1,0 +1,16 @@
+{
+	"name": "auto-manager-builtin-server",
+	"main": "build/main.js",
+	"type": "module",
+	"scripts": {
+		"build": "tsc",
+		"format": "prettier . --config ../.prettierrc --ignore-path ../.gitignore --write"
+	},
+        "devDependencies": {
+                "prettier": "^3.6.2",
+                "typescript": "^5.9.3"
+        },
+        "dependencies": {
+                "auto-manager-core": "file:../core"
+        }
+}

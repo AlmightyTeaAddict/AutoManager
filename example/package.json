@@ -17,6 +17,7 @@
                 "auto-manager-core": "file:../core",
                 "auto-manager-scheduler": "file:../scheduler",
                 "auto-manager-server": "file:../server",
-                "auto-manager-ui": "file:../ui"
+                "auto-manager-ui": "file:../ui",
+		"auto-manager-builtin-server": "file:../builtin-server"
         }
 }
