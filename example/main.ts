@@ -55,4 +55,4 @@ async function responder(req: server.Req): Promise<server.Res> {
 }
 
 setInterval(tick, 1000);
-server.start(responder);
+server.start("http://localhost:8000", responder);
