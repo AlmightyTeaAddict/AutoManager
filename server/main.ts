@@ -18,10 +18,10 @@ export type Res = {
 export function start(clientOrigin: string, responder: (req: Req) => Promise<Res>) {
         const server = nodeCreateServer(async (nodeReq, nodeRes) => {
                 const reqResult = await nodeReqToNiceReq(nodeReq);
+		nodeRes.setHeader("Access-Control-Allow-Origin", clientOrigin);
                 if (!reqResult.isOk) {
                         // TODO: Better error
                         nodeRes.statusCode = 400;
-			nodeRes.setHeader("Access-Control-Allow-Origin", clientOrigin);
                         nodeRes.end();
                         return;
                 }
