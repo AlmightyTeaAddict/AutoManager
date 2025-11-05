@@ -19,6 +19,7 @@ export async function responder(
         return {
                 body: "{}",
                 status: 404,
+		contentType: "application/json",
         };
 }
 
@@ -33,6 +34,7 @@ async function promptResponder(
                         return {
                                 body: "{}",
                                 status: 404,
+				contentType: "application/json",
                         };
                 }
                 const id = idResult.data;
@@ -40,6 +42,7 @@ async function promptResponder(
                 return {
                         body: "{}",
                         status: 200,
+			contentType: "application/json",
                 };
         }
 
@@ -53,11 +56,13 @@ async function promptResponder(
                 return {
                         body,
                         status: 200,
+			contentType: "application/json",
                 };
         }
 
         return {
                 body: "{}",
                 status: 404,
+		contentType: "application/json",
         };
 }

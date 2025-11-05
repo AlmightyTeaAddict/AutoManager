@@ -51,6 +51,7 @@ async function responder(req: server.Req): Promise<server.Res> {
         return {
                 body: "{}",
                 status: 404,
+		contentType: "application/json",
         };
 }
 

@@ -13,6 +13,7 @@ export type Req = {
 export type Res = {
         body: string;
         status: number;
+	contentType: string;
 };
 
 export function start(clientOrigin: string, responder: (req: Req) => Promise<Res>) {
@@ -28,6 +29,7 @@ export function start(clientOrigin: string, responder: (req: Req) => Promise<Res
                 const req = reqResult.data;
                 const res = await responder(req);
                 nodeRes.statusCode = res.status;
+		nodeRes.setHeader("Content-Type", res.contentType);
                 nodeRes.end(res.body);
         });
         server.listen(8080);
