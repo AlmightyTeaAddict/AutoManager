@@ -27,7 +27,7 @@ async function promptResponder(
         req: server.Req,
         uiState: ui.State,
 ): Promise<server.Res> {
-        if (req.method === "POST") {
+        if (req.method === "DELETE") {
                 const idStringResult = server.extractPathSegment(2, req);
                 const idResult = result.bind(idStringResult, utils.parseInt);
                 if (!idResult.isOk) {
