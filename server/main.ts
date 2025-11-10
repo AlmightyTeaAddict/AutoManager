@@ -13,13 +13,16 @@ export type Req = {
 export type Res = {
         body: string;
         status: number;
-	contentType: string;
+        contentType: string;
 };
 
-export function start(clientOrigin: string, responder: (req: Req) => Promise<Res>) {
+export function start(
+        clientOrigin: string,
+        responder: (req: Req) => Promise<Res>,
+) {
         const server = nodeCreateServer(async (nodeReq, nodeRes) => {
                 const reqResult = await nodeReqToNiceReq(nodeReq);
-		nodeRes.setHeader("Access-Control-Allow-Origin", clientOrigin);
+                nodeRes.setHeader("Access-Control-Allow-Origin", clientOrigin);
                 if (!reqResult.isOk) {
                         // TODO: Better error
                         nodeRes.statusCode = 400;
@@ -29,7 +32,7 @@ export function start(clientOrigin: string, responder: (req: Req) => Promise<Res
                 const req = reqResult.data;
                 const res = await responder(req);
                 nodeRes.statusCode = res.status;
-		nodeRes.setHeader("Content-Type", res.contentType);
+                nodeRes.setHeader("Content-Type", res.contentType);
                 nodeRes.end(res.body);
         });
         server.listen(8080);

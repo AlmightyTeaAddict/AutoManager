@@ -45,13 +45,16 @@ function tick() {
 
 async function responder(req: server.Req): Promise<server.Res> {
         if (api.isUsingApi(req)) {
-                return await api.responder(req, { ui: uiState });
+                return await api.responder(req, {
+                        ui: uiState,
+                        scheduler: schedulerState,
+                });
         }
 
         return {
                 body: "{}",
                 status: 404,
-		contentType: "application/json",
+                contentType: "application/json",
         };
 }
 
