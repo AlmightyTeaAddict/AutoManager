@@ -6,6 +6,15 @@ import Html exposing (..)
 import Http
 import PromptQueue
 import Schedule
+import Time
+
+
+totalReload : Cmd Msg
+totalReload =
+    Cmd.batch
+        [ Api.getPromptQueue GotPromptQueue
+        , Api.getSchedule GotSchedule
+        ]
 
 
 type alias State =
@@ -17,6 +26,7 @@ type alias State =
 type Msg
     = GotPromptQueue (Result Http.Error (List PromptQueue.Item))
     | GotSchedule (Result Http.Error (List Schedule.Item))
+    | RefreshTimerTick
 
 
 main =
@@ -37,22 +47,22 @@ init _ =
             }
 
         cmd =
-            Cmd.batch
-                [ Api.getPromptQueue GotPromptQueue
-                , Api.getSchedule GotSchedule
-                ]
+            totalReload
     in
     ( state, cmd )
 
 
 subscriptions : State -> Sub Msg
 subscriptions _ =
-    Sub.none
+    Time.every 2000 (always RefreshTimerTick)
 
 
 update : Msg -> State -> ( State, Cmd Msg )
 update msg state =
     case msg of
+        RefreshTimerTick ->
+            ( state, totalReload )
+
         GotPromptQueue (Err httpError) ->
             ( state, Cmd.none )
 
