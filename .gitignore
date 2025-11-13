@@ -1,4 +1,4 @@
 build
 node_modules
 elm-stuff
-builtin-web/index.html
+builtin-web/public

@@ -2,7 +2,7 @@
 	"name": "auto-manager-builtin-web",
 	"scripts": {
 		"watch": "elm reactor",
-		"build": "elm make ./src/Main.elm",
+		"build": "elm make ./src/Main.elm --output=./public/main.html",
 		"format": "elm-format ./src"
 	},
 	"devDependencies": {
