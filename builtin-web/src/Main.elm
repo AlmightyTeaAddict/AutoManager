@@ -8,6 +8,7 @@ import Html.Styled.Attributes exposing (..)
 import Html.Styled.Events exposing (..)
 import Http
 import List.Extra
+import PromptForm
 import PromptQueue
 import Schedule
 import Time
@@ -189,6 +190,16 @@ viewPromptQueueItem id item =
 
 viewSelectedPrompt : Maybe PromptQueue.Item -> Html Msg
 viewSelectedPrompt maybePrompt =
+    let
+        contents : List (Html Msg)
+        contents =
+            case maybePrompt of
+                Nothing ->
+                    [ p [] [ text "No prompt selected" ] ]
+
+                Just prompt ->
+                    [ h2 [] [ text prompt.name ], PromptForm.view prompt ]
+    in
     div
         [ css
             [ Css.width (Css.pct 100)
@@ -196,16 +207,4 @@ viewSelectedPrompt maybePrompt =
             , Css.overflowY Css.scroll
             ]
         ]
-        (viewSelectedPromptInner maybePrompt)
-
-
-viewSelectedPromptInner : Maybe PromptQueue.Item -> List (Html Msg)
-viewSelectedPromptInner maybePrompt =
-    case maybePrompt of
-        Nothing ->
-            [ p [] [ text "No prompt selected" ]
-            ]
-
-        Just prompt ->
-            [ h2 [] [ text prompt.name ]
-            ]
+        contents
