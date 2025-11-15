@@ -2,7 +2,10 @@ module Main exposing (main)
 
 import Api
 import Browser
-import Html exposing (..)
+import Css exposing (..)
+import Html.Styled exposing (..)
+import Html.Styled.Attributes exposing (..)
+import Html.Styled.Events exposing (..)
 import Http
 import PromptQueue
 import Schedule
@@ -20,6 +23,7 @@ totalReload =
 type alias State =
     { schedule : List Schedule.Item
     , promptQueue : List PromptQueue.Item
+    , selectedPrompt : Maybe Int
     }
 
 
@@ -27,6 +31,7 @@ type Msg
     = GotPromptQueue (Result Http.Error (List PromptQueue.Item))
     | GotSchedule (Result Http.Error (List Schedule.Item))
     | RefreshTimerTick
+    | SelectPrompt Int
 
 
 main =
@@ -44,6 +49,7 @@ init _ =
         state =
             { schedule = []
             , promptQueue = []
+            , selectedPrompt = Nothing
             }
 
         cmd =
@@ -87,14 +93,30 @@ update msg state =
             in
             ( newState, Cmd.none )
 
+        SelectPrompt id ->
+            let
+                newState =
+                    { state
+                        | selectedPrompt = Just id
+                    }
+            in
+            ( newState, Cmd.none )
+
 
 view : State -> Browser.Document Msg
 view state =
     { title = "Auto Manager: THE #1 MANAGER OF AUTOS!!"
     , body =
-        [ viewSchedule state.schedule
-        , viewPromptQueue state.promptQueue
-        ]
+        div
+            [ css
+                [ displayFlex
+                ]
+            ]
+            [ viewSchedule state.schedule
+            , viewPromptQueue state.promptQueue
+            ]
+            |> toUnstyled
+            |> List.singleton
     }
 
 
@@ -112,7 +134,7 @@ viewSchedule items =
                 |> List.sortBy .tick
                 |> List.map viewScheduleItem
     in
-    div []
+    div [ css [ overflow scroll ] ]
         [ div []
             [ h2 [] [ text "Scheduled Scripts" ]
             , text itemsScheduledText
@@ -123,7 +145,7 @@ viewSchedule items =
 
 viewScheduleItem : Schedule.Item -> Html Msg
 viewScheduleItem item =
-    div [] [ text item.scriptName ]
+    button [] [ text item.scriptName ]
 
 
 viewPromptQueue : List PromptQueue.Item -> Html Msg
@@ -140,10 +162,10 @@ viewPromptQueue items =
             [ h2 [] [ text "Prompt Queue" ]
             , text itemsQueuedText
             ]
-        , div [] (List.map viewPromptQueueItem items)
+        , div [] (List.indexedMap viewPromptQueueItem items)
         ]
 
 
-viewPromptQueueItem : PromptQueue.Item -> Html Msg
-viewPromptQueueItem item =
-    div [] [ text item.name ]
+viewPromptQueueItem : Int -> PromptQueue.Item -> Html Msg
+viewPromptQueueItem id item =
+    button [ onClick (SelectPrompt id) ] [ text item.name ]
