@@ -2,11 +2,12 @@ module Main exposing (main)
 
 import Api
 import Browser
-import Css exposing (..)
+import Css
 import Html.Styled exposing (..)
 import Html.Styled.Attributes exposing (..)
 import Html.Styled.Events exposing (..)
 import Http
+import List.Extra
 import PromptQueue
 import Schedule
 import Time
@@ -23,7 +24,7 @@ totalReload =
 type alias State =
     { schedule : List Schedule.Item
     , promptQueue : List PromptQueue.Item
-    , selectedPrompt : Maybe Int
+    , selectedPrompt : Int
     }
 
 
@@ -49,7 +50,7 @@ init _ =
         state =
             { schedule = []
             , promptQueue = []
-            , selectedPrompt = Nothing
+            , selectedPrompt = -1
             }
 
         cmd =
@@ -97,7 +98,7 @@ update msg state =
             let
                 newState =
                     { state
-                        | selectedPrompt = Just id
+                        | selectedPrompt = id
                     }
             in
             ( newState, Cmd.none )
@@ -109,11 +110,14 @@ view state =
     , body =
         div
             [ css
-                [ displayFlex
+                [ Css.displayFlex
+                , Css.property "gap" "1rem"
+                , Css.height (Css.vh 100)
                 ]
             ]
             [ viewSchedule state.schedule
             , viewPromptQueue state.promptQueue
+            , viewSelectedPrompt <| List.Extra.getAt state.selectedPrompt state.promptQueue
             ]
             |> toUnstyled
             |> List.singleton
@@ -134,7 +138,13 @@ viewSchedule items =
                 |> List.sortBy .tick
                 |> List.map viewScheduleItem
     in
-    div [ css [ overflow scroll ] ]
+    div
+        [ css
+            [ Css.width (Css.pct 100)
+            , Css.height (Css.pct 100)
+            , Css.overflowY Css.scroll
+            ]
+        ]
         [ div []
             [ h2 [] [ text "Scheduled Scripts" ]
             , text itemsScheduledText
@@ -157,7 +167,13 @@ viewPromptQueue items =
                 |> String.fromInt
                 |> (\n -> n ++ " prompts are queued.")
     in
-    div []
+    div
+        [ css
+            [ Css.width (Css.pct 100)
+            , Css.height (Css.pct 100)
+            , Css.overflowY Css.scroll
+            ]
+        ]
         [ div []
             [ h2 [] [ text "Prompt Queue" ]
             , text itemsQueuedText
@@ -169,3 +185,27 @@ viewPromptQueue items =
 viewPromptQueueItem : Int -> PromptQueue.Item -> Html Msg
 viewPromptQueueItem id item =
     button [ onClick (SelectPrompt id) ] [ text item.name ]
+
+
+viewSelectedPrompt : Maybe PromptQueue.Item -> Html Msg
+viewSelectedPrompt maybePrompt =
+    div
+        [ css
+            [ Css.width (Css.pct 100)
+            , Css.height (Css.pct 100)
+            , Css.overflowY Css.scroll
+            ]
+        ]
+        (viewSelectedPromptInner maybePrompt)
+
+
+viewSelectedPromptInner : Maybe PromptQueue.Item -> List (Html Msg)
+viewSelectedPromptInner maybePrompt =
+    case maybePrompt of
+        Nothing ->
+            [ p [] [ text "No prompt selected" ]
+            ]
+
+        Just prompt ->
+            [ h2 [] [ text prompt.name ]
+            ]
