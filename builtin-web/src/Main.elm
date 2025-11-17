@@ -7,33 +7,26 @@ import Html.Styled exposing (..)
 import Html.Styled.Attributes exposing (..)
 import Html.Styled.Events exposing (..)
 import Http
-import List.Extra
-import PromptForm
-import PromptQueue
+import PromptPanel
 import Schedule
 import Time
 
 
 totalReload : Cmd Msg
 totalReload =
-    Cmd.batch
-        [ Api.getPromptQueue GotPromptQueue
-        , Api.getSchedule GotSchedule
-        ]
+    Api.getSchedule GotSchedule
 
 
 type alias State =
     { schedule : List Schedule.Item
-    , promptQueue : List PromptQueue.Item
-    , selectedPrompt : Int
+    , promptPanel : PromptPanel.State
     }
 
 
 type Msg
-    = GotPromptQueue (Result Http.Error (List PromptQueue.Item))
-    | GotSchedule (Result Http.Error (List Schedule.Item))
+    = GotSchedule (Result Http.Error (List Schedule.Item))
     | RefreshTimerTick
-    | SelectPrompt Int
+    | PromptPanelMsg PromptPanel.Msg
 
 
 main =
@@ -48,21 +41,37 @@ main =
 init : () -> ( State, Cmd Msg )
 init _ =
     let
+        ( promptPanelState, promptPanelCmd ) =
+            PromptPanel.init ()
+
+        state : State
         state =
             { schedule = []
-            , promptQueue = []
-            , selectedPrompt = -1
+            , promptPanel = promptPanelState
             }
 
+        cmd : Cmd Msg
         cmd =
-            totalReload
+            Cmd.batch
+                [ totalReload
+                , promptPanelCmd |> Cmd.map PromptPanelMsg
+                ]
     in
     ( state, cmd )
 
 
 subscriptions : State -> Sub Msg
-subscriptions _ =
-    Time.every 2000 (always RefreshTimerTick)
+subscriptions state =
+    let
+        promptPanelSubs =
+            state.promptPanel
+                |> PromptPanel.subscriptions
+                |> Sub.map PromptPanelMsg
+
+        refresh =
+            Time.every 2000 (always RefreshTimerTick)
+    in
+    Sub.batch [ refresh, promptPanelSubs ]
 
 
 update : Msg -> State -> ( State, Cmd Msg )
@@ -70,18 +79,6 @@ update msg state =
     case msg of
         RefreshTimerTick ->
             ( state, totalReload )
-
-        GotPromptQueue (Err httpError) ->
-            ( state, Cmd.none )
-
-        GotPromptQueue (Ok promptQueue) ->
-            let
-                newState =
-                    { state
-                        | promptQueue = promptQueue
-                    }
-            in
-            ( newState, Cmd.none )
 
         GotSchedule (Err httpError) ->
             ( state, Cmd.none )
@@ -95,14 +92,20 @@ update msg state =
             in
             ( newState, Cmd.none )
 
-        SelectPrompt id ->
+        PromptPanelMsg childMsg ->
             let
+                ( promptPanelState, promptPanelCmd ) =
+                    PromptPanel.update childMsg state.promptPanel
+
                 newState =
                     { state
-                        | selectedPrompt = id
+                        | promptPanel = promptPanelState
                     }
+
+                cmd =
+                    Cmd.map PromptPanelMsg promptPanelCmd
             in
-            ( newState, Cmd.none )
+            ( newState, cmd )
 
 
 view : State -> Browser.Document Msg
@@ -117,8 +120,7 @@ view state =
                 ]
             ]
             [ viewSchedule state.schedule
-            , viewPromptQueue state.promptQueue
-            , viewSelectedPrompt <| List.Extra.getAt state.selectedPrompt state.promptQueue
+            , state.promptPanel |> PromptPanel.view |> Html.Styled.map PromptPanelMsg
             ]
             |> toUnstyled
             |> List.singleton
@@ -157,54 +159,3 @@ viewSchedule items =
 viewScheduleItem : Schedule.Item -> Html Msg
 viewScheduleItem item =
     button [] [ text item.scriptName ]
-
-
-viewPromptQueue : List PromptQueue.Item -> Html Msg
-viewPromptQueue items =
-    let
-        itemsQueuedText =
-            items
-                |> List.length
-                |> String.fromInt
-                |> (\n -> n ++ " prompts are queued.")
-    in
-    div
-        [ css
-            [ Css.width (Css.pct 100)
-            , Css.height (Css.pct 100)
-            , Css.overflowY Css.scroll
-            ]
-        ]
-        [ div []
-            [ h2 [] [ text "Prompt Queue" ]
-            , text itemsQueuedText
-            ]
-        , div [] (List.indexedMap viewPromptQueueItem items)
-        ]
-
-
-viewPromptQueueItem : Int -> PromptQueue.Item -> Html Msg
-viewPromptQueueItem id item =
-    button [ onClick (SelectPrompt id) ] [ text item.name ]
-
-
-viewSelectedPrompt : Maybe PromptQueue.Item -> Html Msg
-viewSelectedPrompt maybePrompt =
-    let
-        contents : List (Html Msg)
-        contents =
-            case maybePrompt of
-                Nothing ->
-                    [ p [] [ text "No prompt selected" ] ]
-
-                Just prompt ->
-                    [ h2 [] [ text prompt.name ], PromptForm.view prompt ]
-    in
-    div
-        [ css
-            [ Css.width (Css.pct 100)
-            , Css.height (Css.pct 100)
-            , Css.overflowY Css.scroll
-            ]
-        ]
-        contents

@@ -1,9 +1,9 @@
-module PromptQueue exposing
+module PromptPanel.Queue exposing
     ( Item
+    , decoder
+    , encode
     , encodeItem
-    , encodeQueue
     , itemDecoder
-    , queueDecoder
     )
 
 import Json.Decode as D
@@ -24,9 +24,9 @@ encodeItem { name, id } =
         ]
 
 
-encodeQueue : List Item -> E.Value
-encodeQueue promptQueue =
-    E.list encodeItem promptQueue
+encode : List Item -> E.Value
+encode queue =
+    E.list encodeItem queue
 
 
 itemDecoder : D.Decoder Item
@@ -36,6 +36,6 @@ itemDecoder =
         (D.field "id" D.int)
 
 
-queueDecoder : D.Decoder (List Item)
-queueDecoder =
+decoder : D.Decoder (List Item)
+decoder =
     D.list itemDecoder
