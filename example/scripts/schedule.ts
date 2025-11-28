@@ -1,5 +1,4 @@
-import { logger } from "auto-manager-core";
-import * as scheduler from "auto-manager-scheduler";
+import { logger, scheduler } from "auto-manager";
 
 export function scheduleScript(
         schedulerState: scheduler.State,

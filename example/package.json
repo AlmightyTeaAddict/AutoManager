@@ -13,11 +13,6 @@
                 "typescript": "^5.9.3"
         },
         "dependencies": {
-                "auto-manager-api": "file:../api",
-                "auto-manager-core": "file:../core",
-                "auto-manager-scheduler": "file:../scheduler",
-                "auto-manager-server": "file:../server",
-                "auto-manager-ui": "file:../ui",
-                "auto-manager-builtin-server": "file:../builtin-server"
+                "auto-manager": "file:../auto-manager"
         }
 }

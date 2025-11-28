@@ -1,15 +1,14 @@
-import { logger, errors, result, utils } from "auto-manager-core";
-import * as scheduler from "auto-manager-scheduler";
-import * as ui from "auto-manager-ui";
-import * as server from "auto-manager-server";
-import * as api from "auto-manager-api";
+import { api, http, prompts, scheduler, logger, errors } from "auto-manager";
 import { sayHiScript } from "./scripts/sayHi.ts";
 import { scheduleScript } from "./scripts/schedule.ts";
 import { askNameScript } from "./scripts/askName.ts";
 
 const schedulerState: scheduler.State = { tick: 0, schedule: [] };
 const loggerState: logger.State = { logs: [] };
-const uiState: ui.State = { promptQueue: [], nextPromptQueueItemId: 0 };
+const promptState: prompts.State = {
+        promptQueue: [],
+        nextPromptQueueItemId: 0,
+};
 
 schedulerState.schedule.push({
         scriptName: "schedule",
@@ -29,7 +28,7 @@ function tick() {
                         continue;
                 }
                 if (scriptName === "ask-name") {
-                        askNameScript(uiState);
+                        askNameScript(promptState);
                         continue;
                 }
                 const userError: errors.UserError = {
@@ -43,10 +42,10 @@ function tick() {
         }
 }
 
-async function responder(req: server.Req): Promise<server.Res> {
+async function responder(req: http.Req): Promise<http.Res> {
         if (api.isUsingApi(req)) {
                 return await api.responder(req, {
-                        ui: uiState,
+                        prompts: promptState,
                         scheduler: schedulerState,
                 });
         }
@@ -59,4 +58,4 @@ async function responder(req: server.Req): Promise<server.Res> {
 }
 
 setInterval(tick, 1000);
-server.start("http://localhost:8000", responder);
+http.start("http://localhost:8000", responder);

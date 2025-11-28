@@ -1,4 +1,14 @@
 {
-        "name": "auto-manager",
-	"workspaces": ["core", "ui", "scheduler", "server", "api", "builtin-server", "builtin-web", "example"]
+	"name": "auto-manager",
+	"workspaces": [
+		"auto-manager",
+		"example",
+		"web-dash"
+	],
+	"scripts": {
+		"buildall": "npm run build -w=server -w=example -w=web-dash",
+		"formatall": "npm run format -w=server -w=example -w=web-dash",
+		"startexample": "npm run start -w=example",
+		"startweb": "npm run start -w=builtin-web"
+	}
 }

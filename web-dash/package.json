@@ -1,0 +1,12 @@
+{
+	"name": "web-dash",
+	"scripts": {
+		"start": "elm reactor",
+		"build": "elm make ./src/Main.elm --output=./build/main.html",
+		"format": "elm-format ./src --yes"
+	},
+	"devDependencies": {
+		"elm": "^0.19.1-6",
+		"elm-format": "^0.8.8"
+	}
+}
