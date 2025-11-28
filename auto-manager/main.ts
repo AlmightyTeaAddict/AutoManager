@@ -1,3 +1,4 @@
+export { type State, setupState } from "./state.ts";
 export * as api from "./api.ts";
 export * as errors from "./errors.ts";
 export * as http from "./http.ts";

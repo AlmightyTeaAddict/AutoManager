@@ -1,9 +1,6 @@
-export type State = {
-        nextPromptQueueItemId: number;
-        promptQueue: Array<PromptQueueItem>;
-};
+import type { State } from "./state.ts";
 
-type PromptQueueItem = {
+export type PromptQueueItem = {
         name: string;
         resolve: (data: string) => void;
         id: number;

@@ -1,6 +1,6 @@
-import { prompts } from "auto-manager";
+import { type State, prompts } from "auto-manager";
 
-export async function askNameScript(promptState: prompts.State): Promise<void> {
+export async function askNameScript(state: State): Promise<void> {
         const prompt = "ask-name";
-        const name = await prompts.addPrompt(promptState, prompt);
+        const name = await prompts.addPrompt(state, prompt);
 }

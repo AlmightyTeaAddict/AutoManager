@@ -1,9 +1,6 @@
+import type { State } from "./state.ts";
 import * as errors from "./errors.ts";
 import * as utils from "./utils.ts";
-
-export type State = {
-        logs: Log[];
-};
 
 export type Log =
         | { type: "error"; error: errors.GeneralError }

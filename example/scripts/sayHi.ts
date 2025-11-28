@@ -1,10 +1,7 @@
-import { logger, scheduler } from "auto-manager";
+import { type State, logger } from "auto-manager";
 
-export function sayHiScript(
-        schedulerState: scheduler.State,
-        loggerState: logger.State,
-) {
-        logger.addLog(loggerState, {
+export function sayHiScript(state: State) {
+        logger.addLog(state, {
                 type: "info",
                 message: "Haiiiiiiii :33",
                 source: "say-hi script",

@@ -1,7 +1,4 @@
-export type State = {
-        schedule: Schedule;
-        tick: number;
-};
+import type { State } from "./state.ts";
 
 export type ScheduleItem = {
         scriptName: string;
