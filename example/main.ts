@@ -10,11 +10,7 @@ const promptState: prompts.State = {
         nextPromptQueueItemId: 0,
 };
 
-schedulerState.schedule.push({
-        scriptName: "schedule",
-        tick: 1,
-        done: false,
-});
+scheduler.schedule(schedulerState, "schedule", 1);
 
 function tick() {
         const scriptsToRun = scheduler.tick(schedulerState);
@@ -35,10 +31,7 @@ function tick() {
                         code: "scheduled_script_does_not_exist",
                         name: scriptName,
                 };
-                logger.addLog(loggerState, {
-                        type: "error",
-                        error: { module: "user", userError },
-                });
+                logger.addErrorLog(loggerState, { module: "user", userError });
         }
 }
 

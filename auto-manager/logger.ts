@@ -23,3 +23,7 @@ export function addLog(state: State, log: Log) {
         state.logs.push(log);
         console.log(formatLog(log));
 }
+
+export function addErrorLog(state: State, error: errors.GeneralError) {
+	addLog(state, { type: "error", error });
+}

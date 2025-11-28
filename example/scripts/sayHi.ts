@@ -4,10 +4,9 @@ export function sayHiScript(
         schedulerState: scheduler.State,
         loggerState: logger.State,
 ) {
-        const info: logger.Log = {
+        logger.addLog(loggerState, {
                 type: "info",
                 message: "Haiiiiiiii :33",
                 source: "say-hi script",
-        };
-        logger.addLog(loggerState, info);
+        });
 }

@@ -24,3 +24,11 @@ export function tick(state: State): string[] {
         state.tick++;
         return scriptsToRun;
 }
+
+export function schedule(state: State, scriptName: string, tick: number) {
+	state.schedule.push({
+		scriptName,
+		tick,
+		done: false,
+	});
+}
