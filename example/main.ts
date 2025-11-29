@@ -13,12 +13,12 @@ import { askNameScript } from "./scripts/askName.ts";
 
 const state = setupState();
 
-scheduler.schedule(state, "schedule", 1);
+scheduler.schedule(state, "schedule", { type: "tick", tick: 1 });
 
 function tick() {
         const now = Date.now();
         time.deleteFinishedTimeBlocks(state, now);
-        const scriptsToRun = scheduler.tick(state);
+        const scriptsToRun = scheduler.tick(state, now);
         for (const scriptName of scriptsToRun) {
                 if (scriptName === "say-hi") {
                         sayHiScript(state);
