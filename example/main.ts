@@ -1,11 +1,11 @@
 import {
         api,
         http,
-        prompts,
         scheduler,
         logger,
         errors,
         setupState,
+        time,
 } from "auto-manager";
 import { sayHiScript } from "./scripts/sayHi.ts";
 import { scheduleScript } from "./scripts/schedule.ts";
@@ -16,6 +16,8 @@ const state = setupState();
 scheduler.schedule(state, "schedule", 1);
 
 function tick() {
+        const now = Date.now();
+        time.deleteFinishedTimeBlocks(state, now);
         const scriptsToRun = scheduler.tick(state);
         for (const scriptName of scriptsToRun) {
                 if (scriptName === "say-hi") {

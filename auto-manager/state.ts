@@ -1,6 +1,7 @@
 import * as scheduler from "./scheduler.ts";
 import * as logger from "./logger.ts";
 import * as prompts from "./prompts.ts";
+import * as time from "./time.ts";
 
 export type State = {
 	tick: number,
@@ -8,6 +9,7 @@ export type State = {
 	logs: logger.Log[],
 	promptQueue: prompts.PromptQueueItem[],
 	nextPromptQueueItemId: number,
+	timeBlocks: time.TimeBlock[],
 };
 
 export function setupState(): State {
@@ -17,6 +19,7 @@ export function setupState(): State {
 		logs: [],
 		promptQueue: [],
 		nextPromptQueueItemId: 0,
+		timeBlocks: [],
 	};
 }
 

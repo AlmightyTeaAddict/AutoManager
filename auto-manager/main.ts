@@ -7,4 +7,5 @@ export * as prompts from "./prompts.ts";
 export * as result from "./result.ts";
 export * as scheduler from "./scheduler.ts";
 export * as utils from "./utils.ts";
+export * as time from "./time.ts";
 
