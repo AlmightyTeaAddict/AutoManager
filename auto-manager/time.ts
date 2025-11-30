@@ -21,6 +21,6 @@ export function requestTimeBlock(state: State, block: TimeBlock): boolean {
 }
 
 export function deleteFinishedTimeBlocks(state: State, now: number) {
-	state.timeBlocks.filter(block => block.start + block.duration < now);
+	state.timeBlocks = state.timeBlocks.filter(block => block.start + block.duration < now);
 }
 

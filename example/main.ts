@@ -45,6 +45,10 @@ async function responder(req: http.Req): Promise<http.Res> {
                 return await api.responder(state, req);
         }
 
+        if (http.matchPathSegment("dash", 0, req)) {
+                return await http.staticFile("../web-dash/build", req);
+        }
+
         return {
                 body: "{}",
                 status: 404,
