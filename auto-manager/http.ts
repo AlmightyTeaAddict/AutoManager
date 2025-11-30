@@ -169,17 +169,26 @@ const contentTypes: Map<string, string> = new Map([
 ]);
 
 export async function staticFile(dir: string, req: Req): Promise<Res> {
-	req.path = req.path.filter(a => a !== "..");
+	req.path = req.path.slice(1).filter(a => a !== "..");
 	const filename = dir + "/" + req.path.join("/");
-	const contents = await readFile(filename, "utf8");
-	const extension = extname(filename);
-	const contentType = contentTypes.has(extension)
-		? contentTypes.get(extension) as string
-		: "text/plain";
-	return {
-		status: 200,
-		body: contents,
-		contentType,
-	};
+	console.log(filename);
+	try {
+		const contents = await readFile(filename, "utf8");
+		const extension = extname(filename);
+		const contentType = contentTypes.has(extension)
+			? contentTypes.get(extension) as string
+			: "text/plain";
+		return {
+			status: 200,
+			body: contents,
+			contentType,
+		};
+	} catch (e) {
+		return {
+			status: 404,
+			body: "{}",
+			contentType: "text/json",
+		};
+	}
 }
 

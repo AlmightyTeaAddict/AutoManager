@@ -2,7 +2,7 @@
 	"name": "web-dash",
 	"scripts": {
 		"start": "elm reactor",
-		"build": "elm make ./src/Main.elm --output=./build/main.html",
+		"build": "elm make ./src/Main.elm --output=./build/index.html",
 		"format": "elm-format ./src --yes"
 	},
 	"devDependencies": {
