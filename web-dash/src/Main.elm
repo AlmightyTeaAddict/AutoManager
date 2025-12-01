@@ -138,7 +138,6 @@ viewSchedule items =
 
         itemElements =
             items
-                |> List.sortBy .tick
                 |> List.map viewScheduleItem
     in
     div
