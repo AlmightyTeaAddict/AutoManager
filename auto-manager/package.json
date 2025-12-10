@@ -1,15 +1,18 @@
 {
         "name": "auto-manager",
         "main": "build/main.js",
-        "type": "module",
+	"type": "module",
         "scripts": {
                 "build": "tsc",
+		"test": "jest",
                 "format": "prettier . --config ../.prettierrc --ignore-path ../.gitignore --write"
         },
         "devDependencies": {
+                "@types/jest": "^30.0.0",
                 "@types/node": "^24.7.2",
+                "jest": "^30.2.0",
                 "prettier": "^3.6.2",
+                "ts-jest": "^29.4.6",
                 "typescript": "^5.9.3"
-        },
-        "dependencies": {}
+        }
 }

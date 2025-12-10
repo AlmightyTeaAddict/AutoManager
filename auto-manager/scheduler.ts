@@ -6,7 +6,6 @@ export type Activation = { type: "tick", tick: number } | { type: "time", time: 
 export type ScheduleItem = {
         scriptName: string;
 	activation: Activation,
-        done: boolean;
 };
 
 export type Schedule = ScheduleItem[];

@@ -1,0 +1,12 @@
+{
+	"extends": "../tsconfig.base.json",
+	"include": ["./**/*.ts"],
+	"exclude": ["./build/*"],
+	"compilerOptions": {
+		"module": "es2015",
+		"noEmit": true,
+		"types": ["jest", "node"],
+		"verbatimModuleSyntax": false,
+                "esModuleInterop": true
+	}
+}

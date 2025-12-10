@@ -4,6 +4,10 @@ import * as prompts from "./prompts.ts";
 import * as result from "./result.ts";
 import * as utils from "./utils.ts";
 
+// TODO: Need to check whether a 404 or 405 should be sent and create tests for this. Right now, a
+// 405 is sent.
+// TODO: Doesn't currently check for DELETE-ing a prompt that doesn't exist
+
 export function isUsingApi(req: http.Req): boolean {
         return http.matchPathSegment("api", 0, req);
 }
@@ -27,7 +31,7 @@ export async function responder(
         };
 }
 
-async function promptResponder(
+export async function promptResponder(
         state: State,
         req: http.Req,
 ): Promise<http.Res> {
@@ -66,12 +70,12 @@ async function promptResponder(
 
         return {
                 body: "{}",
-                status: 404,
+                status: 405,
                 contentType: "application/json",
         };
 }
 
-async function scheduleResponder(
+export async function scheduleResponder(
         state: State,
         req: http.Req,
 ) {
@@ -86,7 +90,7 @@ async function scheduleResponder(
 
         return {
                 body: "{}",
-                status: 404,
+                status: 405,
                 contentType: "application/json",
         };
 }
