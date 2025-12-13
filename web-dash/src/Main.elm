@@ -9,6 +9,7 @@ import Html.Styled.Events exposing (..)
 import Http
 import PromptPanel
 import Schedule
+import Styles
 import Time
 
 
@@ -117,10 +118,16 @@ view state =
                 [ Css.displayFlex
                 , Css.property "gap" "1rem"
                 , Css.height (Css.vh 100)
+                , Css.color Styles.darkColour
+                , Styles.bodyFont
                 ]
             ]
             [ viewSchedule state.schedule
             , state.promptPanel |> PromptPanel.view |> Html.Styled.map PromptPanelMsg
+
+            -- I know this is evil but there's not really a better way. I dont want to compile to a
+            -- js file because it won't work with elm-reactor!
+            , node "link" [ rel "stylesheet", href "https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" ] []
             ]
             |> toUnstyled
             |> List.singleton
@@ -157,4 +164,4 @@ viewSchedule items =
 
 viewScheduleItem : Schedule.Item -> Html Msg
 viewScheduleItem item =
-    button [] [ text item.scriptName ]
+    button [ css Styles.button ] [ text item.scriptName ]

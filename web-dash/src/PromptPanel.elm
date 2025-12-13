@@ -9,6 +9,7 @@ import List.Extra
 import PromptPanel.Api
 import PromptPanel.Form.AskName
 import PromptPanel.Queue
+import Styles
 import Time
 
 
@@ -119,7 +120,7 @@ viewQueuePanel items =
 
 viewQueueItem : Int -> PromptPanel.Queue.Item -> Html Msg
 viewQueueItem id item =
-    button [ onClick (SelectPrompt id) ] [ text item.name ]
+    button [ onClick (SelectPrompt id), css Styles.button ] [ text item.name ]
 
 
 viewFormPanel : Maybe PromptPanel.Queue.Item -> Html Msg
