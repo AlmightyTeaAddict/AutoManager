@@ -39,6 +39,5 @@ export function schedule(state: State, scriptName: string, activation: Activatio
 	state.schedule.push({
 		scriptName,
 		activation,
-		done: false,
 	});
 }
