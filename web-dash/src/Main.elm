@@ -127,7 +127,7 @@ view state =
 
             -- I know this is evil but there's not really a better way. I dont want to compile to a
             -- js file because it won't work with elm-reactor!
-            , node "link" [ rel "stylesheet", href "https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Noto+Serif:ital,wght@0,100..900;1,100..900&display=swap" ] []
+            , node "link" [ rel "stylesheet", href "https://fonts.googleapis.com/css2?family=Cascadia+Code:ital,wght@0,200..700;1,200..700&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" ] []
             ]
             |> toUnstyled
             |> List.singleton

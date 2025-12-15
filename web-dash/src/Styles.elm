@@ -11,12 +11,12 @@ import Css
 
 bodyFont : Css.Style
 bodyFont =
-    Css.fontFamilies [ "Noto Sans" ]
+    Css.fontFamilies [ "Noto Sans", "Tahoma", "sans-serif" ]
 
 
 headingFont : Css.Style
 headingFont =
-    Css.fontFamilies [ "Noto Serif" ]
+    Css.fontFamilies [ "Cascadia code", "Courier New", "monospace" ]
 
 
 darkColour : Css.Color
