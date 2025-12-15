@@ -24,6 +24,10 @@ export async function responder(
                 return scheduleResponder(state, req);
         }
 
+        if (http.matchPathSegment("time-block", 1, req)) {
+                return timeBlockResponder(state, req);
+        }
+
         return {
                 body: "{}",
                 status: 404,
@@ -93,4 +97,21 @@ export async function scheduleResponder(
                 status: 405,
                 contentType: "application/json",
         };
+}
+
+export async function timeBlockResponder(state: State, req: http.Req): Promise<http.Res> {
+	if (req.method === "GET") {
+		const body = JSON.stringify(state.timeBlocks);
+		return {
+			body,
+			status: 200,
+			contentType: "application/json"
+		};
+	}
+
+	return {
+		body: "{}",
+		status: 405,
+		contentType: "application/json"
+	};
 }
