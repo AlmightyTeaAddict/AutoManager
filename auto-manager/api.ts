@@ -79,10 +79,7 @@ export async function promptResponder(
         };
 }
 
-export async function scheduleResponder(
-        state: State,
-        req: http.Req,
-) {
+export async function scheduleResponder(state: State, req: http.Req) {
         if (req.method === "GET") {
                 const body = JSON.stringify(state.schedule);
                 return {
@@ -99,19 +96,22 @@ export async function scheduleResponder(
         };
 }
 
-export async function timeBlockResponder(state: State, req: http.Req): Promise<http.Res> {
-	if (req.method === "GET") {
-		const body = JSON.stringify(state.timeBlocks);
-		return {
-			body,
-			status: 200,
-			contentType: "application/json"
-		};
-	}
+export async function timeBlockResponder(
+        state: State,
+        req: http.Req,
+): Promise<http.Res> {
+        if (req.method === "GET") {
+                const body = JSON.stringify(state.timeBlocks);
+                return {
+                        body,
+                        status: 200,
+                        contentType: "application/json",
+                };
+        }
 
-	return {
-		body: "{}",
-		status: 405,
-		contentType: "application/json"
-	};
+        return {
+                body: "{}",
+                status: 405,
+                contentType: "application/json",
+        };
 }

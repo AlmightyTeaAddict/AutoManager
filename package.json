@@ -2,13 +2,17 @@
 	"name": "auto-manager",
 	"workspaces": [
 		"auto-manager",
-		"example",
+		"examples/dev",
 		"web-dash"
 	],
 	"scripts": {
-		"buildall": "npm run build -w=server -w=example -w=web-dash",
-		"formatall": "npm run format -w=server -w=example -w=web-dash",
-		"startexample": "npm run start -w=example",
-		"startweb": "npm run start -w=builtin-web"
+		"build-lib": "npm run build -w=auto-manager -w=examples/dev",
+		"start-server": "npm run start -w=examples/dev",
+		"dev-dash": "npm run dev -w=web-dash",
+
+		"test-lib": "npm run test -w=auto-manager",
+
+		"build": "npm run build -w=auto-manager -w=examples/dev -w=web-dash",
+		"format": "npm run format -w=auto-manager -w=examples/dev -w=web-dash"
 	}
 }

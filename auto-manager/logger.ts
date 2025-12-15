@@ -22,5 +22,5 @@ export function addLog(state: State, log: Log) {
 }
 
 export function addErrorLog(state: State, error: errors.GeneralError) {
-	addLog(state, { type: "error", error });
+        addLog(state, { type: "error", error });
 }

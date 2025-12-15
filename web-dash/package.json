@@ -1,7 +1,7 @@
 {
 	"name": "web-dash",
 	"scripts": {
-		"start": "elm reactor",
+		"dev": "elm reactor",
 		"build": "elm make ./src/Main.elm --output=./build/index.html",
 		"format": "elm-format ./src --yes"
 	},

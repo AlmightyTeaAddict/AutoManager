@@ -1,3 +1,16 @@
+/*
+ * The "dev" example:
+ * This example config is here for quick testing while programming. It changes all the time.
+ *
+ * If you're using this while changing auto-manager: you need to first build auto-manager, then
+ * build the dev-example, then restart the dev-example for changes to take effect.
+ *
+ * If you're using this while changing web-dash: you should start dev-example and leave it running.
+ * Use the dev script in web-dash and open Main.elm in elm-reactor for the ui. The server _will_
+ * expose the web-dash in /dash, but it only updates when the whole elm app is rebuilt so don't use
+ * it.
+ */
+
 import {
         api,
         http,
@@ -46,7 +59,7 @@ async function responder(req: http.Req): Promise<http.Res> {
         }
 
         if (http.matchPathSegment("dash", 0, req)) {
-                return await http.staticFile("../web-dash/build", req);
+                return await http.staticFile("../../web-dash/build", req);
         }
 
         return {

@@ -1,10 +1,10 @@
 {
         "name": "auto-manager",
         "main": "build/main.js",
-	"type": "module",
+        "type": "module",
         "scripts": {
                 "build": "tsc",
-		"test": "jest",
+                "test": "jest",
                 "format": "prettier . --config ../.prettierrc --ignore-path ../.gitignore --write"
         },
         "devDependencies": {

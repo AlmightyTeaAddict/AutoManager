@@ -1,10 +1,10 @@
 {
-        "name": "example",
+        "name": "dev-example",
         "main": "build/main.js",
         "type": "module",
         "scripts": {
                 "build": "tsc",
-                "format": "prettier . --config ../.prettierrc --ignore-path ../.gitignore --write",
+                "format": "prettier . --config ../../.prettierrc --ignore-path ../../.gitignore --write",
                 "start": "node ./build/main.js"
         },
         "devDependencies": {
@@ -13,6 +13,6 @@
                 "typescript": "^5.9.3"
         },
         "dependencies": {
-                "auto-manager": "file:../auto-manager"
+                "auto-manager": "file:../../auto-manager"
         }
 }
