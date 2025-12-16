@@ -1,0 +1,10 @@
+{
+        "name": "timetable-example",
+        "main": "build/main.js",
+        "type": "module",
+        "scripts": {
+                "build": "tsc",
+                "format": "prettier . --config ../../.prettierrc --ignore-path ../../.gitignore --write",
+                "start": "node ./build/main.js"
+        }
+}

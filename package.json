@@ -2,8 +2,9 @@
 	"name": "auto-manager",
 	"workspaces": [
 		"auto-manager",
+		"web-dash",
 		"examples/dev",
-		"web-dash"
+		"examples/timetable"
 	],
 	"scripts": {
 		"build-lib": "npm run build -w=auto-manager -w=examples/dev",
@@ -12,7 +13,7 @@
 
 		"test-lib": "npm run test -w=auto-manager",
 
-		"build": "npm run build -w=auto-manager -w=examples/dev -w=web-dash",
-		"format": "npm run format -w=auto-manager -w=examples/dev -w=web-dash"
+		"build": "npm run build -ws",
+		"format": "npm run format -ws"
 	}
 }
