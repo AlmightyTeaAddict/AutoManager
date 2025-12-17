@@ -9,6 +9,7 @@ import Html.Styled.Events exposing (..)
 import Http
 import PromptPanel
 import Schedule
+import ServerInfo exposing (ServerInfo)
 import Styles
 import Time
 
@@ -21,11 +22,13 @@ totalReload =
 type alias State =
     { schedule : List Schedule.Item
     , promptPanel : PromptPanel.State
+    , serverInfo : Maybe ServerInfo
     }
 
 
 type Msg
     = GotSchedule (Result Http.Error (List Schedule.Item))
+    | GotServerInfo (Result Http.Error ServerInfo)
     | RefreshTimerTick
     | PromptPanelMsg PromptPanel.Msg
 
@@ -49,6 +52,7 @@ init _ =
         state =
             { schedule = []
             , promptPanel = promptPanelState
+            , serverInfo = Nothing
             }
 
         cmd : Cmd Msg
@@ -56,6 +60,7 @@ init _ =
             Cmd.batch
                 [ totalReload
                 , promptPanelCmd |> Cmd.map PromptPanelMsg
+                , Api.getServerInfo GotServerInfo
                 ]
     in
     ( state, cmd )
@@ -89,6 +94,18 @@ update msg state =
                 newState =
                     { state
                         | schedule = schedule
+                    }
+            in
+            ( newState, Cmd.none )
+
+        GotServerInfo (Err httpError) ->
+            ( state, Cmd.none )
+
+        GotServerInfo (Ok serverInfo) ->
+            let
+                newState =
+                    { state
+                        | serverInfo = Just serverInfo
                     }
             in
             ( newState, Cmd.none )
