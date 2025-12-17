@@ -3,6 +3,7 @@ import * as http from "./http.ts";
 import * as prompts from "./prompts.ts";
 import * as result from "./result.ts";
 import * as utils from "./utils.ts";
+import * as time from "./time.ts";
 
 // TODO: Need to check whether a 404 or 405 should be sent and create tests for this. Right now, a
 // 405 is sent.
@@ -26,6 +27,10 @@ export async function responder(
 
         if (http.matchPathSegment("time-block", 1, req)) {
                 return timeBlockResponder(state, req);
+        }
+
+        if (http.matchPathSegment("server-info", 1, req)) {
+                return serverInfoResponder(req);
         }
 
         return {
@@ -102,6 +107,26 @@ export async function timeBlockResponder(
 ): Promise<http.Res> {
         if (req.method === "GET") {
                 const body = JSON.stringify(state.timeBlocks);
+                return {
+                        body,
+                        status: 200,
+                        contentType: "application/json",
+                };
+        }
+
+        return {
+                body: "{}",
+                status: 405,
+                contentType: "application/json",
+        };
+}
+
+export async function serverInfoResponder(req: http.Req): Promise<http.Res> {
+        const serverInfo = {
+                timezoneOffset: time.toHuman(time.now()).zoneOffset,
+        };
+        if (req.method === "GET") {
+                const body = JSON.stringify(serverInfo);
                 return {
                         body,
                         status: 200,

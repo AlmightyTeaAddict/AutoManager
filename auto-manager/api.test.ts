@@ -74,6 +74,17 @@ describe("responder", () => {
                 expect(res.body).toStrictEqual("[]");
                 expect(res.contentType).toStrictEqual("application/json");
         });
+        test("Handles /api/server-info requests", async () => {
+                const req: http.Req = {
+                        path: ["api", "server-info"],
+                        method: "GET",
+                        body: "",
+                };
+                const res = await api.scheduleResponder(state, req);
+                expect(res.status).toStrictEqual(200);
+                expect(res.body).not.toStrictEqual("");
+                expect(res.contentType).toStrictEqual("application/json");
+        });
         test("Handles invalid requests", async () => {
                 const req: http.Req = {
                         path: ["api", "invalid"],
@@ -192,6 +203,35 @@ describe("timeBlockResponder", () => {
                         body: "",
                 };
                 const res = await api.timeBlockResponder(state, req);
+                expect(res.status).toStrictEqual(405);
+                expect(res.contentType).toStrictEqual("application/json");
+                expect(res.body).toStrictEqual("{}");
+        });
+});
+
+describe("serverInfoResponder", () => {
+        const serverInfo = {
+                timezoneOffset: time.toHuman(time.now()).zoneOffset,
+        };
+        const serverInfoAsJson = JSON.stringify(serverInfo);
+        test("Handles GET request", async () => {
+                const req: http.Req = {
+                        path: ["api", "server-info"],
+                        method: "GET",
+                        body: "",
+                };
+                const res = await api.serverInfoResponder(req);
+                expect(res.status).toStrictEqual(200);
+                expect(res.contentType).toStrictEqual("application/json");
+                expect(res.body).toStrictEqual(serverInfoAsJson);
+        });
+        test("Handles invalid methods", async () => {
+                const req: http.Req = {
+                        path: ["api", "time-block"],
+                        method: "POST",
+                        body: "",
+                };
+                const res = await api.serverInfoResponder(req);
                 expect(res.status).toStrictEqual(405);
                 expect(res.contentType).toStrictEqual("application/json");
                 expect(res.body).toStrictEqual("{}");
