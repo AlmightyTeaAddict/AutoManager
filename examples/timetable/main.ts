@@ -9,10 +9,26 @@ import {
 } from "auto-manager";
 
 const state = setupState();
-scheduler.schedule(state, "timetable", { type: "time", time: 1 });
+scheduler.schedule(state, "timetable-week", { type: "time", time: 1 });
 
-function timetableScript() {
-        //  TODO
+const timetable = [
+        ["cs", "maths", "maths"],
+        ["maths", "physics", "cs"],
+        ["physics", "maths", "free"],
+        ["physics", "maths", "maths"],
+        ["maths", "cs", "physics"],
+];
+
+/*
+ * This script is called at the start of Monday. It requests TimeBlocks for the entire week's
+ * timetable.
+ */
+function timetableWeekScript() {
+        for (const day of timetable) {
+                for (const period of day) {
+                        // TODO
+                }
+        }
 }
 
 function tick() {
@@ -20,8 +36,8 @@ function tick() {
         time.deleteFinishedTimeBlocks(state, now);
         const scriptsToRun = scheduler.tick(state, now);
         for (const scriptToRun of scriptsToRun) {
-                if (scriptToRun === "timetable") {
-                        timetableScript();
+                if (scriptToRun === "timetable-week") {
+                        timetableWeekScript();
                         continue;
                 }
                 const userError: errors.UserError = {
