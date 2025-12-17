@@ -23,21 +23,59 @@ const timetable = [
  * This script is called at the start of Monday. It requests TimeBlocks for the entire week's
  * timetable.
  */
-function timetableWeekScript() {
-        for (const day of timetable) {
-                for (const period of day) {
-                        // TODO
-                }
+function timetableWeekScript(now: time.DateTime) {
+        const mondayStart = time.toStartOfDay(now);
+        const periodLengthMs = 30 * 60 * 60 * 1000;
+        for (let i = 0; i < 5; i++) {
+                const period1 = time.addHumanUnits(mondayStart, {
+                        year: 0,
+                        month: 0,
+                        date: i,
+                        hr: 9,
+                        min: 0,
+                        s: 0,
+                        ms: 0,
+                });
+                const period2 = time.addHumanUnits(mondayStart, {
+                        year: 0,
+                        month: 0,
+                        date: i,
+                        hr: 11,
+                        min: 30,
+                        s: 0,
+                        ms: 0,
+                });
+                const period3 = time.addHumanUnits(mondayStart, {
+                        year: 0,
+                        month: 0,
+                        date: i,
+                        hr: 13,
+                        min: 45,
+                        s: 0,
+                        ms: 0,
+                });
+                time.requestTimeBlock(state, {
+                        start: period1,
+                        duration: periodLengthMs,
+                });
+                time.requestTimeBlock(state, {
+                        start: period2,
+                        duration: periodLengthMs,
+                });
+                time.requestTimeBlock(state, {
+                        start: period3,
+                        duration: periodLengthMs,
+                });
         }
 }
 
 function tick() {
-        const now = Date.now();
+        const now = time.now();
         time.deleteFinishedTimeBlocks(state, now);
         const scriptsToRun = scheduler.tick(state, now);
         for (const scriptToRun of scriptsToRun) {
                 if (scriptToRun === "timetable-week") {
-                        timetableWeekScript();
+                        timetableWeekScript(now);
                         continue;
                 }
                 const userError: errors.UserError = {
